@@ -26,18 +26,7 @@ fun NavigationRoot(
             rememberViewModelStoreNavEntryDecorator()
         ),
         entryProvider = entryProvider {
-            entry<Route.TodoList> {
-                TodoListScreen(
-                    onTodoClick = {
-                        backStack.add(Route.TodoDetail(it))
-                    }
-                )
-            }
-            entry<Route.TodoDetail>{
-                TodoDetailScreen(
-                    todo = it.todo
-                )
-            }
+
         }
     )
 }
