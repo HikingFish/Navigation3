@@ -14,12 +14,12 @@ val TOP_LEVEL_DESTINATIONS = mapOf(
         icon = R.drawable.outline_checklist_24,
         title = "Todos"
     ),
-    Route.TodoList to BottomNavItem(
-        icon = R.drawable.outline_checklist_24,
-        title = "Todos"
+    Route.TodoFavorite to BottomNavItem(
+        icon = R.drawable.baseline_favorite_24,
+        title = "Favourites"
     ),
-    Route.TodoList to BottomNavItem(
-        icon = R.drawable.outline_checklist_24,
-        title = "Todos"
+    Route.Settings to BottomNavItem(
+        icon = R.drawable.baseline_settings_24,
+        title = "Settings"
     )
 )
