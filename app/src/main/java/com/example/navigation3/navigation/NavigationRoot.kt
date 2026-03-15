@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.LineHeightStyle
@@ -23,41 +24,42 @@ import com.example.navigation3.screens.TodoListScreen
 fun NavigationRoot(
     modifier: Modifier = Modifier
 ){
-    val backStack = rememberNavBackStack(
-        Route.TodoList
+    val navigationState = rememberNavigationState(
+        startRoute = Route.TodoList,
+        topLevelRoutes = TOP_LEVEL_DESTINATIONS.keys
     )
+    val navigator = remember {
+        Navigator(navigationState)
+    }
     Scaffold (
         modifier = modifier,
         bottomBar = {
             TodoNavigationBar(
-                selectedKey = Route.TodoList,
+                selectedKey = navigationState.topLevelRoute,
                 onSelectKey = {
-                    // TODO: Select key
+                    navigator.navigate(it)
                 }
             )
         }
     ) { innerPadding ->
-            NavDisplay(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                backStack = backStack,
-                entryDecorators = listOf(
-                    rememberSaveableStateHolderNavEntryDecorator(),
-                    rememberViewModelStoreNavEntryDecorator()
-                ),
-                entryProvider = entryProvider {
+        NavDisplay(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            onBack = navigator::goBack,
+            entries = navigationState.toEntries(
+                entryProvider {
                     entry<Route.TodoList> {
                         TodoListScreen(
                             onTodoClick = {
-                                backStack.add(Route.TodoDetail(it))
+                                navigator.navigate(Route.TodoDetail(it))
                             }
                         )
                     }
                     entry<Route.TodoFavorite> {
                         TodoListScreen(
                             onTodoClick = {
-                                backStack.add(Route.TodoDetail(it))
+                                navigator.navigate(Route.TodoDetail(it))
                             }
                         )
                     }
@@ -77,6 +79,7 @@ fun NavigationRoot(
                     }
                 }
             )
+        )
     }
 
 }

@@ -19,29 +19,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Navigation3Theme {
-                Scaffold{ innerPadding ->
-                    NavigationRoot(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                    )
-                }
+                NavigationRoot()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Navigation3Theme {
-        Greeting("Android")
     }
 }
